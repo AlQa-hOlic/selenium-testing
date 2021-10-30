@@ -18,6 +18,7 @@ dependencies {
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
   testImplementation 'org.testng:testng:7.0.0'
   testImplementation 'io.github.bonigarcia:webdrivermanager:5.0.3'
+  testImplementation 'org.seleniumhq.selenium:selenium-java:4.0.0'
 }
 
 test {
