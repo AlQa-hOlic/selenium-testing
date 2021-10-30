@@ -4,6 +4,7 @@ import static org.testng.Assert.assertSame;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
@@ -24,7 +25,9 @@ public class ApplicationTest extends IntegrationTestBase {
 
     @BeforeTest
     void setupTest() {
-        driver = new FirefoxDriver();
+        FirefoxOptions options = new FirefoxOptions();
+        options.setHeadless(System.getenv("CI") != null);
+        driver = new FirefoxDriver(options);
     }
 
 
