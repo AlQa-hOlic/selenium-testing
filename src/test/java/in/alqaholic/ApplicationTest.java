@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -19,15 +18,16 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import org.testng.asserts.Assertion;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class ApplicationTest extends IntegrationTestBase {
     
+    private String testTodo = "testwith8characters";
+    
     @LocalServerPort
     private int port;
-    
+
     WebDriver driver;
 
     @BeforeSuite
@@ -53,20 +53,46 @@ public class ApplicationTest extends IntegrationTestBase {
         assertEquals(driver.getTitle(), "Todo App");
     }
 
-    @Test
+    @Test(dependsOnMethods = "hasTitle")
     public void addTodo() {
-        String testTodo = "testwith8characters";
-
-        driver.get("http://localhost:" + port + "/");
-
         driver.findElement(By.xpath("//input[@name='value']")).sendKeys(testTodo + Keys.ENTER);
 
         new WebDriverWait(driver, 15)
-            .until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//li")));
+            .until(ExpectedConditions.numberOfElementsToBe(By.xpath("//li"), 1));
 
         List<WebElement> items = driver.findElements(By.xpath("//li"));
-        
         assertSame(items.size(), 1);
+    }
+
+    @Test(dependsOnMethods = "addTodo")
+    public void toggleTodo() {
+        WebElement button = driver.findElement(By.xpath("//li/form[1]/button"));
+        button.click();
+
+        new WebDriverWait(driver, 15)
+            .until(ExpectedConditions.attributeContains(By.xpath("//li/form[1]/button"), "class", "line-through"));
+
+        button = driver.findElement(By.xpath("//li/form[1]/button"));
+        button.click();
+        
+        new WebDriverWait(driver, 15)
+            .until(ExpectedConditions.not(
+                ExpectedConditions.attributeContains(By.xpath("//li/form[1]/button"), "class", "line-through")
+            ));
+        
+        assertFalse(driver.findElement(By.xpath("//li/form[1]/button")).getAttribute("class").contains("line-through"));
+    }
+
+    @Test(dependsOnMethods = "toggleTodo")
+    public void deleteTodo() {
+        WebElement button = driver.findElement(By.xpath("//li/form[2]/button"));
+        button.click();
+
+        new WebDriverWait(driver, 15)
+            .until(ExpectedConditions.numberOfElementsToBe(By.xpath("//li"), 0));
+
+        List<WebElement> items = driver.findElements(By.xpath("//li"));
+        assertSame(items.size(), 0);
     }
 
     @AfterTest
