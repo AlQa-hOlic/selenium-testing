@@ -54,10 +54,9 @@ class TodoService {
 
   TodoService() {
     this.todos = new ArrayList<>();
-
-    this.todos.add(new Todo("Drink coffee"));
-    this.todos.add(new Todo("Eat breakfast"));
-    this.todos.add(new Todo("Go to college"));
+    // this.todos.add(new Todo("Drink coffee"));
+    // this.todos.add(new Todo("Eat breakfast"));
+    // this.todos.add(new Todo("Go to college"));
   }
 
   public List<Todo> getTodos() {
