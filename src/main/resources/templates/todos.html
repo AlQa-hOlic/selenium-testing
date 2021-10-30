@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="logo.svg" type="image/x-icon">
+    <title>Todo App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,700;1,300;1,700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/tailwindcss-jit-cdn"></script>
+    <style type="postcss">
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-white">
+    <header class="flex h-32 justify-center items-center">
+        <h1 class="text-gray-600 text-4xl antialiased">Todo App</h1>
+    </header>
+    <main>
+        <form class="flex justify-center items-center mb-3" th:action="@{/todos/create}" method="post" autocomplete="off">
+            <input name="value"
+                required minlength="8"
+                class="rounded border-none bg-gray-100 max-w-xl w-full focus:outline-none focus:ring-2 focus:ring-gray-300 transition duration-200"
+                type="text" placeholder="Enter a todo..." />
+        </form>
+        <div class="flex justify-center items-stretch">
+            <ul class="max-w-xl w-full">
+                <li th:each="todo:${todos}"
+                    class="p-2 flex justify-between items-center rounded hover:bg-gray-50 focus-within:bg-gray-50 transition-colors duration-200">
+                    <form th:action="@{/todos/toggle/(id=${todo.id})}" method="post">
+                        <button tabindex="0" th:text="${todo.value}"
+                            class="flex-grow truncate text-gray-500 text-md focus:outline-none hover:text-gray-700 focus:text-gray-700 transition duration-200"
+                            th:classappend="${todo.completed ? 'line-through text-green-300 hover:text-green-500 focus:text-green-500' : 'no-underline'}">
+                            Todo 1
+                        </button>
+                    </form>
+
+                    <form th:action="@{/todos/delete/(id=${todo.id})}" method="post">
+                        <button type="submit"
+                            class="p-1 flex-shrink-0 rounded text-gray-600 hover:text-red-500 hover:bg-gray-200 focus:text-red-500 focus:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </main>
+</body>
+
+</html>
