@@ -1,6 +1,6 @@
 package in.alqaholic;
 
-import static org.testng.Assert.assertSame;
+import static org.testng.Assert.*;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -37,6 +37,11 @@ public class ApplicationTest extends IntegrationTestBase {
         WebDriverWait wait = new WebDriverWait(driver, 15);
         wait.until(driver -> driver.getTitle().equals("Todo App"));
         assertSame("itWorks".equalsIgnoreCase("itworks"), true);
+    }
+
+    @Test
+    public void fail() {
+        assertTrue(false);
     }
 
     @AfterTest
