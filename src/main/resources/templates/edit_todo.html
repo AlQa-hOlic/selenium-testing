@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="logo.svg" type="image/x-icon">
+    <title>Edit Todo | Todo App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,700;1,300;1,700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/tailwindcss-jit-cdn"></script>
+    <style type="postcss">
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="relative bg-white">
+    <header class="flex h-32 justify-center items-center">
+        <h1 class="text-gray-600 text-4xl antialiased">Edit Todo</h1>
+    </header>
+    <main>
+        <form class="flex justify-center items-center space-x-2 mb-3" th:action="@{/todos/edit/(id=${todo.id})}" method="post"
+            autocomplete="off">
+            <input name="newValue" required minlength="8"
+                class="rounded border-none bg-gray-100 max-w-xl w-full focus:outline-none focus:ring-2 focus:ring-gray-300 transition duration-200"
+                type="text" placeholder="Enter a todo..." th:value="${todo.value}" />
+            <div class="flex flex-shrink-0 space-x-1">
+                <button type="submit" class="p-1 rounded text-gray-600 hover:text-yellow-500 hover:bg-gray-200 focus:text-yellow-500 focus:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                    </svg>
+                </button>
+                <a th:href="@{/todos}"
+                   class="p-1 flex-shrink-0 rounded text-gray-600 hover:text-red-500 hover:bg-gray-200 focus:text-red-500 focus:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </a>
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>

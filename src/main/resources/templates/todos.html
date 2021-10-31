@@ -20,39 +20,48 @@
     </style>
 </head>
 
-<body class="bg-white">
+<body class="relative bg-white">
     <header class="flex h-32 justify-center items-center">
         <h1 class="text-gray-600 text-4xl antialiased">Todo App</h1>
     </header>
     <main>
-        <form class="flex justify-center items-center mb-3" th:action="@{/todos/create}" method="post" autocomplete="off">
-            <input name="value"
-                required minlength="8"
+        <form class="flex justify-center items-center mb-3" th:action="@{/todos/create}" method="post"
+            autocomplete="off">
+            <input name="value" required minlength="8"
                 class="rounded border-none bg-gray-100 max-w-xl w-full focus:outline-none focus:ring-2 focus:ring-gray-300 transition duration-200"
                 type="text" placeholder="Enter a todo..." />
         </form>
         <div class="flex justify-center items-stretch">
             <ul class="max-w-xl w-full">
                 <li th:each="todo:${todos}"
-                    class="p-2 flex justify-between items-center rounded hover:bg-gray-50 focus-within:bg-gray-50 transition-colors duration-200">
-                    <form th:action="@{/todos/toggle/(id=${todo.id})}" method="post">
+                    class="p-2 flex justify-between items-center space-x-2 rounded hover:bg-gray-50 focus-within:bg-gray-50 transition-colors duration-200">
+                    <form th:action="@{/todos/toggle/(id=${todo.id})}" method="post" class="truncate max-w-full">
                         <button tabindex="0" th:text="${todo.value}"
-                            class="flex-grow truncate text-gray-500 text-md focus:outline-none hover:text-gray-700 focus:text-gray-700 transition duration-200"
+                            class="flex-grow truncate max-w-full text-gray-500 text-md focus:outline-none hover:text-gray-700 focus:text-gray-700 transition duration-200"
                             th:classappend="${todo.completed ? 'line-through text-green-300 hover:text-green-500 focus:text-green-500' : 'no-underline'}">
                             Todo 1
                         </button>
                     </form>
 
-                    <form th:action="@{/todos/delete/(id=${todo.id})}" method="post">
-                        <button type="submit"
-                            class="p-1 flex-shrink-0 rounded text-gray-600 hover:text-red-500 hover:bg-gray-200 focus:text-red-500 focus:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
+                    <div class="flex flex-shrink-0 space-x-1">
+                        <a th:href="@{/todos/edit/(id=${todo.id})}" class="p-1 rounded text-gray-600 hover:text-yellow-500 hover:bg-gray-200 focus:text-yellow-500 focus:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12" />
+                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                             </svg>
-                        </button>
-                    </form>
+                        </a>
+                        <form th:action="@{/todos/delete/(id=${todo.id})}" method="post">
+                            <button type="submit"
+                                class="p-1 flex-shrink-0 rounded text-gray-600 hover:text-red-500 hover:bg-gray-200 focus:text-red-500 focus:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
                 </li>
             </ul>
         </div>
