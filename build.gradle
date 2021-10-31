@@ -23,9 +23,9 @@ dependencies {
 
 test {
   useTestNG() {
-    // useDefaultListeners = true
-    useDefaultListeners = false
-    // testLogging.showStandardStreams = true
+    preserveOrder true
+    useDefaultListeners false
+    // testLogging.showStandardStreams true
   }
 
   testLogging {
